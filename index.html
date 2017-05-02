@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Twatt Ajaxified</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <style>
+    .status {
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="jumbotron text-center">
+      <h1>Search in Twitter</h1>
+      <p>Insert search query below</p>
+    </div>
+  </div>
+
+  
+
+  <div class="container text-center">
+    <label for="input-lg">Search:</label>
+    <input class="search input-md" type="text">
+      <div class="container">
+        <button class="btn-xs btn-primary submit-btn" type="submit">Submit</button>
+        <button class="btn-xs btn-primary refresh-btn" type="submit">Refresh</button>
+      </div>
+  </div>
+  <div class="container timeline">
+    <ul class="ul-timeline">
+      
+    </ul>
+  </div>
+  
+  <script>
+    $('.submit-btn').click(function() {
+      var searchQuery = $('.search').val();
+      axios.get(`http://localhost:3000/api/twatt/search?q=${searchQuery}`)
+      .then((res) => {
+        console.log(res.data.statuses)
+        const statusLength = res.data.statuses.length;
+        for(var i = 0; i < statusLength; i++) {
+          $('.timeline').append(`<p class="status">${res.data.statuses[i].text}</p>`);
+        }
+      })
+    });
+
+    $('.refresh-btn').click(function() {
+      $('.timeline').empty();
+    })
+  </script>
+
+</body>
+</html>
