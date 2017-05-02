@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Twatt</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <form id="search">
+      <input type="text" id="param"/>
+      <button type="submit" id="button">Search</button>
+    </form>
+    <table>
+        <thead id="myHeader">
+        </thead>
+        <tbody id="myTable">
+        </tbody>
+    </table>
+    <a>Recent</a>
+    <table>
+        <thead id="myHeader2">
+        </thead>
+        <tbody id="myTable2">
+        </tbody>
+    </table>
+    <script>
+    $(document).ready(()=>{
+      $('a').click((event)=>{
+        event.preventDefault();
+        axios.get('http://localhost:3000/twittersearch/search')
+        .then(function (response) {
+          $('#myHeader2').append(`<tr><td>Tweets</td></tr>`);
+          response.data.forEach(data => {
+                          // console.log(`<tr>${data.name}</tr><tr>${data.text}</tr>`);
+                          $('#myTable2').append(`<tr><td>${data.text}</td></tr>`);
+                      })
+          
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+      })
+      $('#search').submit((event)=>{
+        event.preventDefault();
+        axios.get('http://localhost:3000/twittersearch/' + $("#param").val())
+        
+        .then(function (response) {
+          $('#myHeader').append(`<tr><td>Tweets</td></tr>`);
+          response.data.statuses.forEach(data => {
+                            // console.log(`<tr>${data.name}</tr><tr>${data.text}</tr>`);
+                            $('#myTable').append(`<tr><td>${data.text}</td></tr>`);
+                        })
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+      })
+    })
+    </script>
+  </body>
+</html>
