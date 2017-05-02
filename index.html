@@ -8,7 +8,11 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <style>
     .status {
-      color: blue;
+      color: #666666;
+    }
+
+    .by {
+      color: ##2F50FB;
     }
   </style>
 </head>
@@ -19,9 +23,7 @@
       <h1>Search in Twitter</h1>
       <p>Insert search query below</p>
     </div>
-  </div>
-
-  
+  </div>  
 
   <div class="container text-center">
     <label for="input-lg">Search:</label>
@@ -29,12 +31,11 @@
       <div class="container">
         <button class="btn-xs btn-primary submit-btn" type="submit">Submit</button>
         <button class="btn-xs btn-primary refresh-btn" type="submit">Refresh</button>
+        <button class="btn-xs btn-primary recent-btn" type="submit">Recent Tweets</button>
       </div>
   </div>
   <div class="container timeline">
-    <ul class="ul-timeline">
-      
-    </ul>
+    
   </div>
   
   <script>
@@ -42,16 +43,27 @@
       var searchQuery = $('.search').val();
       axios.get(`http://localhost:3000/api/twatt/search?q=${searchQuery}`)
       .then((res) => {
-        console.log(res.data.statuses)
+        console.log(res.data);
         const statusLength = res.data.statuses.length;
-        for(var i = 0; i < statusLength; i++) {
-          $('.timeline').append(`<p class="status">${res.data.statuses[i].text}</p>`);
-        }
-      })
-    });
+          for(var i = 0; i < statusLength; i++) {
+            $('.timeline').append(`<p class="status">${res.data.statuses[i].text} <span class="by"> <a href=http://twitter.com/${res.data.statuses[i].user.screen_name}>${res.data.statuses[i].user.screen_name}</a></span> </p>`);
+          }
+        });
+      });
 
     $('.refresh-btn').click(function() {
       $('.timeline').empty();
+    })
+
+    $('.recent-btn').click(function() {
+      axios.get(`http://localhost:3000/api/twatt/recent`)
+      .then((res) => {
+        console.log(res.data);
+        const statusLength = res.data.length;
+          for(var i = 0; i < statusLength; i++) {
+            $('.timeline').append(`<p class="status">${res.data[i].text}</p>`);
+          }
+        });
     })
   </script>
 
