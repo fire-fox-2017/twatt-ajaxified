@@ -1,0 +1,125 @@
+body{
+  margin: 0px;
+}
+
+
+nav{
+  margin: 10px 25px;
+  float: right
+}
+
+a:link{
+  text-decoration: none
+}
+
+p{
+  line-height: 150%
+}
+
+a{
+  color: rgb(255, 255, 255)
+}
+
+li{
+  font-family: serif;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+div{
+  display: block
+}
+
+img.alignleft{
+  float: left;
+  margin-top: 8px;
+  margin-right: 50px
+}
+
+
+/*header*/
+.header-wrap{
+  overflow: hidden;
+  height:100px;
+}
+header{
+  background-color: #32c6e2;
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 55px
+}
+
+ul.ul-header{
+  margin-top: 5px
+}
+
+#search{
+
+}
+
+#menu a{
+  font-size: 30px
+}
+
+#logo{
+  width: 60px;
+  float: left
+}
+
+/*page*/
+#wrapper{
+  overflow: hidden;
+  background: #ffffff;
+  margin: 0px 0px 65px 0px;
+}
+
+#page-wrapper {
+	overflow: hidden;
+}
+
+#page {
+	overflow: hidden;
+	width: 1120px;
+	margin: 0px auto;
+	padding: 50px 40px;
+}
+
+#wide-content {
+padding: 50px;
+border: 10px solid #f1f1f1
+}
+
+#wide-content h2{
+  padding: 10px 0px 0px 0px;
+  letter-spacing: -1px;
+  font-size: 36px;
+  color: #30a436
+}
+
+#img-content{
+  width: 300px;
+  height: 186px;
+}
+
+/*button*/
+.button-style{
+  display: inline-block;
+  margin-top: 8px;
+  padding: 7px 30px;
+  background: #2a7407;
+  border-radius: 5px;
+}
+
+/*footer*/
+#footer-wrap{
+  overflow: hidden;
+  background-color: #32c6e2;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+  height: 100%
+}
+#footer-wrap p{
+  margin: 30px
+}
