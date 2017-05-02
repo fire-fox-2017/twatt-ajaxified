@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Twatt Ajax</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"> </script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <div class="">
+      <input id="input-search" type="text" name="input-search"><button type="submit" name="button" class="search">Search</button>
+    </div>
+    <div class="">
+      <button type="submit" name="button" class="recent">Recent</button>
+    </div>
+    <div class="data">
+      <table class="td" border="1">
+              <tr>
+                <td>No</td>
+                <td>Status</td>
+              </tr>
+            </table>
+
+      <table class="datatable" border="1">
+        <tr>
+          <td>No</td>
+          <td>Status</td>
+        </tr>
+      </table>
+    </div>
+    <script>
+      $('.search').click(function(){
+        var hashTag = $('#input-search').val()
+        axios.get('http://localhost:3000/api/search/'+hashTag)
+        .then(function (response) {
+          // var status = response.data.statuses.length;
+          var status = response.data.statuses;
+          console.log(status)
+          let i = 1;
+          status.forEach(function(dt){
+
+            console.log(dt.text);
+            $('.td').append(`<tr><td>${i++}</td><td>${dt.text}</td></tr>`)
+          })
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      });
+
+      $('.recent').click(function(){
+        axios.get('http://localhost:3000/api/recent')
+        .then(function (response) {
+          var status = response.data;
+          console.log(status)
+          var j = 0;
+          status.forEach((dt)=>{
+            $('.datatable').append(`<tr><td>${j++}</td><td>${dt.text}</td></tr>`)
+          })
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      });
+    </script>
+  </body>
+</html>
