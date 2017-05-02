@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Twatt Ajaxified</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="form">
+      <form action="#" method="post">
+        <input type="text" id="search-keyword" name="keyword" placeholder="Input keyword to search">
+        <button type="button" id="search-button" name="search">Search</button>
+      </form>
+    </div>
+    <div id="search-container">
+
+    </div>
+    <div class="form">
+      <form action="#" method="post">
+        <button type="button" id="recent-button" name="recent">Recent</button>
+      </form>
+    </div>
+    <div id="recent-container">
+
+    </div>
+  </body>
+  <script>
+    $('#search-button').click(() => {
+      var keyword = $('#search-keyword').val();
+      axios.get(`http://localhost:3000/search/${keyword}`)
+      .then((response) => {
+        $('#search-container').empty();
+        response.data.statuses.forEach(row => {
+          $('#search-container').append(`<p>${row.text}</p>`);
+        })
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    })
+    $('#recent-button').click(() => {
+      axios.get('http://localhost:3000/recent')
+      .then((response) => {
+        $('#recent-container').empty();
+        response.data.forEach(row => {
+          $('#recent-container').append(`<p>${row.text}</p>`);
+        })
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    })
+  </script>
+</html>
