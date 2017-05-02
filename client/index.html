@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Twatt</title>
+  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <div>
+    <h1>Tweet Search</h1>
+    <input type="text" id="inputSearch">
+    <button id="search-twatt">Search</button>
+    <div>
+      <table>
+        <thead>
+          <th>Status</th>
+          <th>CreatedAt</th>
+          <th>RetweetCount</th>
+          <th>FavoriteCount</th>
+        </thead>
+        <tbody id="tableSearch">
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br><br>
+  <div>
+    <h1>Tweet Recent</h1>
+    <input type="text" id="recentSearch">
+    <button id="recent-twatt">Recent</button>
+    <div>
+      <table>
+        <thead>
+          <th>Status</th>
+          <th>CreatedAt</th>
+          <th>RetweetCount</th>
+          <th>FavoriteCount</th>
+        </thead>
+        <tbody id="tableRecent">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+  $(document).ready(function(){
+    $("#search-twatt").click(function(){
+      let dataSearch = $('#inputSearch').val()
+      axios.get(`http://localhost:3000/api/searchTweet/${dataSearch}`)
+      .then(function (response) {
+        // console.log('Masukkkkk');
+        // console.log('----------'+dataSearch);
+        // let dataTwitt = JSON.stringify(response)
+        let tempSearch = response
+        var tbodyElSearch = $('#tableSearch')
+        tbodyElSearch.html('')
+        tempSearch.data.forEach(dataTweet => {
+          tbodyElSearch.append(`\
+                        <tr>\
+                            <td class="statusSearch">${dataTweet.status}</td>\
+                            <td class="createdAtSearch">${dataTweet.created_at}</td>\
+                            <td class="retweetCountSearch">${dataTweet.retweet_count}</td>\
+                            <td class="favoriteCountSearch">${dataTweet.favorite_count}</td>\
+                        </tr>\
+                    `);
+        })
+        // console.log(temp.data[1].status);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    });
+
+    $("#recent-twatt").click(function(){
+      let recentSearch = $('#recentSearch').val()
+      axios.get(`http://localhost:3000/api/timelineTweet/${recentSearch}`)
+      .then(function (response) {
+        // console.log('Masukkkkk');
+        // console.log('----------'+dataSearch);
+        // let dataTwitt = JSON.stringify(response)
+        let tempRecent = response
+        var tbodyElRecent = $('#tableRecent')
+        tbodyElRecent.html('')
+        tempRecent.data.forEach(dataTweet => {
+          tbodyElRecent.append(`\
+                        <tr>\
+                            <td class="statusRecent">${dataTweet.status}</td>\
+                            <td class="createdAtRecent">${dataTweet.created_at}</td>\
+                            <td class="retweetCountRecent">${dataTweet.retweet_count}</td>\
+                            <td class="favoriteCountRecent">${dataTweet.favorite_count}</td>\
+                        </tr>\
+                    `);
+        })
+        // console.log(temp.data[1].status);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    });
+  });
+  </script>
+</body>
+</html>
