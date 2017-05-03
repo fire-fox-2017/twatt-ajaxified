@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>APALAH</title>
+
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <!-- Jquery-->
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- AXIOS -->
+  </head>
+  <body>
+
+    <input class="recent" type="button" name="search" value="Recent"></br></br>
+    <table>
+      <thead>
+        <td>NAME</td>
+        <td>TWEET</td>
+      </thead>
+      <tbody id="dataTweet1">
+
+      </tbody>
+    </table>
+
+    <input name="tag" class="tag" type="text">
+    <input type="button" class="search" name="bSearch" value="Search">
+      <table>
+        <thead>
+          <td>NAME</td>
+          <td>TWEET</td>
+        </thead>
+        <tbody id="dataTweet2">
+
+        </tbody>
+      </table>
+  </body>
+
+  <script>
+    $(".recent").click(function(){
+      axios.get('http://localhost:3000/twitter')
+      .then(function(datas){
+        datas.data.forEach((data)=>{
+          $('#dataTweet1').append(`<tr>
+                                  <td>${data.name}</td>
+                                  <td>${data.text}</td>
+                                </tr>`)
+        })
+      })
+      .catch(function(err){
+        console.log(err);
+      })
+    });
+
+    $(".search").click(function(){
+      var value = $(".tag").val()
+      axios.post('http://localhost:3000/twitter', {tag:value})
+      .then(function(datas){
+        datas.data.forEach((data)=>{
+          $('#dataTweet2').append(`<tr>
+                                  <td>${data.name}</td>
+                                  <td>${data.text}</td>
+                                </tr>`)
+        })
+      })
+      .catch(function(err){
+        console.log(err);
+      })
+    });
+  </script>
+
+</html>
